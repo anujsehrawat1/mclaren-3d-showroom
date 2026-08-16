@@ -62,3 +62,11 @@ Follow these steps to run the project locally:
 ├── vite.config.js      # Vite build config
 └── package.json        # Node modules & execution scripts
 ```
+
+---
+
+## 📄 Attributions & Credits
+
+This work is based on **"McLaren P1 GTR 2015"** by [LC Design ⓥⓘⓟ](https://sketchfab.com/h.e.l.l.o_) licensed under [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/).
+Original 3D Asset Link: [Sketchfab Model Source](https://sketchfab.com/3d-models/mclaren-p1-gtr-2015-187bdc110d16417e8a02e71af4ebd8d8)
+
