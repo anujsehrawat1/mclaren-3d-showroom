@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McLaren Hypercar - Interactive 3D Experience</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- Premium Loading Screen -->
+    <div id="loader" class="loader-container">
+        <div class="loader-content">
+            <h1 class="loader-title">McLAREN</h1>
+            <h2 class="loader-subtitle">PRECISION ENGINEERING</h2>
+            <div class="loader-bar-outer">
+                <div id="loader-bar" class="loader-bar-inner"></div>
+            </div>
+            <div id="loader-text" class="loader-percentage">0%</div>
+        </div>
+    </div>
+
+    <!-- WebGL Canvas -->
+    <canvas id="canvas3d"></canvas>
+
+    <!-- SVG Overlay for Annotation Lines -->
+    <svg id="svg-overlay"></svg>
+
+    <!-- Overlay UI -->
+    <div id="ui-container">
+        <!-- Top Info HUD (Displays details of the active part) -->
+        <div id="hud-top" class="hud-top hidden">
+            <div class="hud-tag">ACTIVE COMPONENT</div>
+            <h1 id="part-title" class="hud-title">CAR OVERVIEW</h1>
+            <p id="part-description" class="hud-desc">Experience the pinnacle of automotive design. Select a component from the side panel to explore detailed engineering specifications.</p>
+        </div>
+
+        <!-- Floating Callouts Container (Dynamic HTML elements positioned over 3D coordinates) -->
+        <div id="annotations-container"></div>
+
+        <!-- Navigation Controls (Chevrons) -->
+        <div class="nav-controls">
+            <button id="btn-prev" class="nav-btn" title="Previous Component">
+                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </button>
+            <div id="nav-indicator" class="nav-indicator">0 / 0</div>
+            <button id="btn-next" class="nav-btn" title="Next Component">
+                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+            </button>
+        </div>
+
+        <!-- Collapsible Side Panel -->
+        <aside id="side-panel" class="side-panel">
+            <button id="panel-toggle" class="panel-toggle" title="Toggle Panel">
+                <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+            </button>
+            
+            <div class="panel-header">
+                <div class="brand-logo">McLAREN</div>
+                <div class="brand-sub">DESIGN STUDIO</div>
+            </div>
+
+            <div class="panel-sections">
+                <div class="section-title">ENGINEERING OVERVIEW</div>
+                <ul id="parts-list" class="parts-list">
+                    <!-- Dynamic List Items -->
+                </ul>
+            </div>
+            
+            <div class="panel-footer">
+                <div class="interaction-hint">Use left click to rotate, right click to pan, scroll to zoom.</div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Application Script Entrypoint -->
+    <script type="module" src="/main.js"></script>
+</body>
+</html>
