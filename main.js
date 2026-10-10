@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * *1 as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
@@ -285,7 +285,9 @@ const carParts = [
     }
 ];
 
-// --- Scene Initialization ---
+/**
+ * Initializes the 3D scene, camera, renderer, environment lighting, floor, controls, and UI events.
+ */
 function init() {
     // 1. Scene setup
     scene = new THREE.Scene();
@@ -337,6 +339,9 @@ function init() {
     animate();
 }
 
+/**
+ * Configures the studio lighting setup for the showroom scene.
+ */
 function setupLights() {
     // Ambient Light (Turned off for pure darkness)
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.0);
@@ -371,7 +376,10 @@ function setupLights() {
     scene.add(rimLightRight);
 }
 
-// High-Resolution Seeded Procedural Grungy Concrete Floor Generator
+/**
+ * Generates a high-resolution procedural grungy concrete floor texture canvas.
+ * @returns {THREE.CanvasTexture} The generated floor texture.
+ */
 function createCharcoalTexture() {
     const canvas = document.createElement('canvas');
     canvas.width = 2048;
@@ -421,6 +429,9 @@ function createCharcoalTexture() {
     return new THREE.CanvasTexture(canvas);
 }
 
+/**
+ * Creates and adds the studio floor mesh to the scene.
+ */
 function setupFloor() {
     const charcoalTex = createCharcoalTexture();
     // Do NOT repeat the texture to avoid tiling seams
@@ -443,6 +454,9 @@ function setupFloor() {
     scene.add(floor);
 }
 
+/**
+ * Loads the GLTF car model, centers and scales it, caches interactive nodes, and handles loader fadeout.
+ */
 function loadCarModel() {
     const loader = new GLTFLoader();
 
@@ -562,6 +576,9 @@ function loadCarModel() {
 
 // --- UI Interaction Logic ---
 
+/**
+ * Builds the side panel list items from the `carParts` array.
+ */
 function buildSidePanelList() {
     partsListEl.innerHTML = '';
     carParts.forEach((part, index) => {
@@ -587,10 +604,17 @@ function buildSidePanelList() {
     updateNavIndicator();
 }
 
+/**
+ * Updates the navigation step counter text in the UI.
+ */
 function updateNavIndicator() {
     navIndicatorEl.textContent = `${activeIndex + 1} / ${carParts.length}`;
 }
 
+/**
+ * Focuses the camera and UI on a specific car part by index.
+ * @param {number} index - Index of the target part in carParts.
+ */
 function setPartActive(index) {
     if (index < 0 || index >= carParts.length || index === activeIndex) return;
 
@@ -663,12 +687,19 @@ function setPartActive(index) {
 // --- Annotations & SVG Connection Lines ---
 let currentAnnotations = [];
 
+/**
+ * Clears all DOM and SVG overlay annotations.
+ */
 function clearAnnotations() {
     annotationsContainerEl.innerHTML = '';
     svgOverlayEl.innerHTML = '';
     currentAnnotations = [];
 }
 
+/**
+ * Renders dynamic 3D annotations and connection callouts on screen.
+ * @param {Array} annotations - List of annotation objects for the active part.
+ */
 function renderAnnotations(annotations) {
     clearAnnotations();
     if (!annotations || annotations.length === 0) return;
@@ -704,6 +735,9 @@ function renderAnnotations(annotations) {
     });
 }
 
+/**
+ * Updates positions of on-screen annotation markers and SVG connecting lines each frame.
+ */
 function updateAnnotationsPositions() {
     if (currentAnnotations.length === 0) return;
 
@@ -758,7 +792,9 @@ function updateAnnotationsPositions() {
     });
 }
 
-// --- Event Listeners & Controls ---
+/**
+ * Registers DOM event listeners for navigation, shortcut keys, and window resizing.
+ */
 function setupUIEvents() {
     // Chevron Click Handlers
     prevBtn.addEventListener('click', () => {
@@ -794,15 +830,22 @@ function setupUIEvents() {
     window.addEventListener('resize', onWindowResize);
 }
 
+/**
+ * Adjusts camera aspect ratio and renderer dimensions upon window resize.
+ */
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 }
 
 // --- Interactive Showroom Functions ---
 
-// 1. Car Paint Customizer
+/**
+ * Dynamically changes the exterior car paint color.
+ * @param {string} hexColor - Hexadecimal color code.
+ */
 function changeCarColor(hexColor) {
     if (!carModel) return;
     const color = new THREE.Color(hexColor);
@@ -843,7 +886,9 @@ function changeCarColor(hexColor) {
     });
 }
 
-// 2. Butterfly Doors Toggle
+/**
+ * Toggles opening and closing of dihedral doors.
+ */
 function toggleDoors() {
     if (!carModel || doorNodes.length === 0) return;
     doorsOpen = !doorsOpen;
@@ -879,7 +924,9 @@ function toggleDoors() {
     });
 }
 
-// 3. Active Rear Spoiler / DRS Toggle
+/**
+ * Toggles activation of the active rear spoiler / Drag Reduction System (DRS).
+ */
 function toggleDRS() {
     if (!carModel || spoilerNodes.length === 0) return;
     drsActive = !drsActive;
@@ -908,7 +955,9 @@ function toggleDRS() {
     });
 }
 
-// 4. Cinematic Auto Tour
+/**
+ * Starts or stops the automatic cinematic tour cycling through all car parts.
+ */
 function toggleCinematicTour() {
     const btn = document.getElementById('btn-toggle-tour');
     if (!isTourRunning) {
@@ -927,13 +976,18 @@ function toggleCinematicTour() {
     }
 }
 
+/**
+ * Cycles to the next car part in the cinematic tour.
+ */
 function cycleTour() {
     let nextIdx = activeIndex + 1;
     if (nextIdx >= carParts.length) nextIdx = 0;
     setPartActive(nextIdx);
 }
 
-// 5. Procedural V8 Synthesizer Growl (Web Audio API)
+/**
+ * Synthesizes dynamic procedural V8 engine sound via Web Audio API.
+ */
 function toggleEngineSound() {
     const btn = document.getElementById('btn-engine-sound');
     if (!engineRunning) {
@@ -1009,6 +1063,9 @@ function toggleEngineSound() {
     }
 }
 
+/**
+ * Simulates engine rev sound modulation during camera position sweeps.
+ */
 function revEngine() {
     if (!engineRunning || !audioCtx || !engineNode) return;
     const now = audioCtx.currentTime;
@@ -1026,7 +1083,9 @@ function revEngine() {
     engineNode.gain.gain.linearRampToValueAtTime(0.12, now + 1.3);
 }
 
-// --- Animation Loop ---
+/**
+ * Main animation frame render loop.
+ */
 function animate() {
     requestAnimationFrame(animate);
 
